@@ -1,0 +1,9 @@
+repositories {
+	github("Sxtanna/json-data-map")
+}
+
+dependencies {
+	api("com.sxtanna.mc.json:json-data-map:1.1.0")
+	
+	compileOnly("com.google.code.gson:gson:2.8.8")
+}

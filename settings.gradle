@@ -1,0 +1,10 @@
+rootProject.name = 'element'
+include 'element-common'
+include 'element-inject'
+include 'element-finder'
+include 'element-plugin'
+include 'element-future'
+include 'element-result'
+include 'element-serial'
+include 'element-config'
+

@@ -1,0 +1,83 @@
+allprojects {
+    group "com.sxtanna.mc.element"
+    version "1.0.0"
+    
+    ext {
+        github = { String path ->
+            repositories.maven {
+                url = uri("https://maven.pkg.github.com/$path")
+                
+                credentials {
+                    username = project.hasProperty("githubPackagesUser") ? githubPackagesUser : System.getenv("GITHUB_ACTOR")
+                    password = project.hasProperty("githubPackagesAuth") ? githubPackagesAuth : System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+    }
+}
+
+subprojects {
+    apply plugin: "java-library"
+    
+    apply plugin: "signing"
+    apply plugin: "maven-publish"
+    
+    
+    repositories {
+        mavenCentral()
+    }
+    
+    dependencies {
+        compileOnly("org.jetbrains:annotations:22.0.0")
+        
+        testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
+    }
+    
+    
+    test {
+        useJUnitPlatform()
+    }
+    
+    configurations {
+        testImplementation.extendsFrom(compileOnly)
+    }
+    
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+        
+        sourceCompatibility = JavaVersion.VERSION_16
+        targetCompatibility = JavaVersion.VERSION_16
+    }
+    
+    
+    publishing {
+        repositories {
+            maven {
+                url = uri("https://maven.pkg.github.com/Sxtanna/element")
+                
+                credentials {
+                    username = project.hasProperty("githubPackagesUser") ? githubPackagesUser : System.getenv("GITHUB_ACTOR")
+                    password = project.hasProperty("githubPackagesAuth") ? githubPackagesAuth : System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+        
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = project.group
+                artifactId = project.name
+                version = project.version
+                
+                from components.java
+            }
+        }
+    }
+    
+    signing {
+        sign publishing.publications.mavenJava
+    }
+}
+
+
+

@@ -1,0 +1,3 @@
+dependencies {
+	api("ch.jalu:configme:1.2.0")
+}

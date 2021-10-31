@@ -1,0 +1,20 @@
+repositories {
+    github("Sxtanna/json-data-map")
+    
+    maven {
+        url = uri("https://papermc.io/repo/repository/maven-public/")
+    }
+}
+
+dependencies {
+    api(project(":element-common"))
+    api(project(":element-config"))
+    api(project(":element-finder"))
+    api(project(":element-future"))
+    api(project(":element-inject"))
+    api(project(":element-result"))
+    api(project(":element-serial"))
+    
+    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+}
+
