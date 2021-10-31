@@ -1,6 +1,6 @@
 allprojects {
     group "com.sxtanna.mc.element"
-    version "1.0.0"
+    version "1.0.0-SNAPSHOT"
     
     ext {
         github = { String path ->
