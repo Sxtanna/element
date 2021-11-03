@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.sxtanna.mc.element.result.Opt;
 import com.sxtanna.mc.element.result.Res;
+import com.sxtanna.mc.element.result.throwing.ExceptionalConsumer;
 import com.sxtanna.mc.element.result.throwing.ExceptionalFunction;
 
 import java.util.Objects;
@@ -102,6 +103,52 @@ public interface Result<T>
         try
         {
             return Objects.requireNonNull(function.apply(success.some()));
+        }
+        catch (final Throwable ex)
+        {
+            return Res.failure(ex);
+        }
+    }
+
+
+    default <O> @NotNull Result<O> cast(@NotNull final Class<O> clazz)
+    {
+        return map(clazz::cast);
+    }
+
+
+    default <O> @NotNull Result<O> fold(@NotNull final ExceptionalFunction<T, O> whenSome, @NotNull final ExceptionalFunction<Throwable, O> whenNone)
+    {
+        if (this instanceof Success<T>)
+        {
+            return map(whenSome);
+        }
+
+        try
+        {
+            return Res.of(() -> whenNone.apply(asFailure().none()));
+        }
+        catch (final Throwable ex)
+        {
+            return Res.failure(ex);
+        }
+    }
+
+    default @NotNull Result<T> fold(@NotNull final ExceptionalConsumer<T> whenSome, @NotNull final ExceptionalConsumer<Throwable> whenNone)
+    {
+        try
+        {
+            if (this instanceof Success<T> success)
+            {
+                whenSome.accept(success.some());
+            }
+
+            if (this instanceof Failure<T> failure)
+            {
+                whenNone.accept(failure.none());
+            }
+
+            return this;
         }
         catch (final Throwable ex)
         {
