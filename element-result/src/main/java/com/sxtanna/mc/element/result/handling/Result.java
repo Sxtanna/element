@@ -4,7 +4,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import com.sxtanna.mc.element.result.Opt;
+import com.sxtanna.mc.element.result.Res;
+import com.sxtanna.mc.element.result.throwing.ExceptionalFunction;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public interface Result<T>
@@ -67,6 +70,43 @@ public interface Result<T>
     default @NotNull Optional<Failure<T>> asFailureOptional()
     {
         return Opt.of(asFailureOrNull());
+    }
+
+
+    default <O> @NotNull Result<O> map(@NotNull final ExceptionalFunction<@NotNull T, @Nullable O> function)
+    {
+        final var success = asSuccessOrNull();
+        if (success == null)
+        {
+            return ((Failure<O>) this);
+        }
+
+        try
+        {
+            return Res.success(Objects.requireNonNull(function.apply(success.some())));
+        }
+        catch (final Throwable ex)
+        {
+            return Res.failure(ex);
+        }
+    }
+
+    default <O> @NotNull Result<O> let(@NotNull final ExceptionalFunction<@NotNull T, @Nullable Result<O>> function)
+    {
+        final var success = asSuccessOrNull();
+        if (success == null)
+        {
+            return ((Failure<O>) this);
+        }
+
+        try
+        {
+            return Objects.requireNonNull(function.apply(success.some()));
+        }
+        catch (final Throwable ex)
+        {
+            return Res.failure(ex);
+        }
     }
 
 }
