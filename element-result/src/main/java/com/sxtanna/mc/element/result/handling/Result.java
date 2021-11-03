@@ -3,8 +3,18 @@ package com.sxtanna.mc.element.result.handling;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import com.sxtanna.mc.element.result.Opt;
+
+import java.util.Optional;
+
 public interface Result<T>
 {
+
+    default @NotNull Optional<T> asOptional()
+    {
+        return this instanceof Success<T> success ? Opt.of(success.some()) : Optional.empty();
+    }
+
 
     default @NotNull Success<T> asSuccess()
     {
@@ -46,6 +56,17 @@ public interface Result<T>
     default @Nullable Failure<T> asFailureOrNull()
     {
         return this instanceof Failure<T> failure ? failure : null;
+    }
+
+
+    default @NotNull Optional<Success<T>> asSuccessOptional()
+    {
+        return Opt.of(asSuccessOrNull());
+    }
+
+    default @NotNull Optional<Failure<T>> asFailureOptional()
+    {
+        return Opt.of(asFailureOrNull());
     }
 
 }
