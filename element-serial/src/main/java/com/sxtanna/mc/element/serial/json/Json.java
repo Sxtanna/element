@@ -2,6 +2,7 @@ package com.sxtanna.mc.element.serial.json;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import com.sxtanna.mc.element.serial.json.build.JsonArrBuilder;
 import com.sxtanna.mc.element.serial.json.build.JsonObjBuilder;
@@ -74,6 +75,39 @@ public enum Json
         ADAPTERS.forEach(builder::registerTypeAdapter);
 
         return builder;
+    }
+
+
+    public static @NotNull String encodeToText(@Nullable Object value)
+    {
+        return normal().toJson(value);
+    }
+
+    public static @NotNull String encodeToText(@Nullable Object value, @NotNull final Class<?> clazz)
+    {
+        return normal().toJson(value, clazz);
+    }
+
+
+    public static @NotNull JsonElement encodeToJson(@Nullable Object value)
+    {
+        return normal().toJsonTree(value);
+    }
+
+    public static @NotNull JsonElement encodeToJson(@Nullable Object value, @NotNull final Class<?> clazz)
+    {
+        return normal().toJsonTree(value, clazz);
+    }
+
+
+    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable String json)
+    {
+        return normal().fromJson(json, clazz);
+    }
+
+    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable JsonElement json)
+    {
+        return normal().fromJson(json, clazz);
     }
 
 
