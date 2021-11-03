@@ -49,7 +49,12 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     @Override
     public final void onDisable()
     {
-        Try.twr(timing.time("kill"), $ -> {this.kill();});
+        Try.twr(timing.time("kill"), $ ->
+        {
+            this.kill();
+
+            this.system().closeAndReport();
+        });
     }
 
 
