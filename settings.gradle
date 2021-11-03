@@ -1,4 +1,5 @@
 rootProject.name = 'element'
+include 'element-bukkit'
 include 'element-common'
 include 'element-config'
 include 'element-finder'
