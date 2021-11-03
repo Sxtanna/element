@@ -12,10 +12,14 @@ import com.sxtanna.mc.element.common.state.State;
 import com.sxtanna.mc.element.inject.ElementInjector;
 import com.sxtanna.mc.element.plugin.timing.ElementTimings;
 import com.sxtanna.mc.element.result.Try;
+import com.sxtanna.mc.element.system.ElementSystem;
+import com.sxtanna.mc.element.system.Sys;
 
 public abstract class ElementPlugin extends JavaPlugin implements Inits, State
 {
 
+    @NotNull
+    private final ElementSystem   system = Sys.create();
     @NotNull
     private final ElementTimings  timing = new ElementTimings(this);
     @NotNull
@@ -67,15 +71,21 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
 
 
     @Contract(pure = true)
+    public final @NotNull ElementInjector inject()
+    {
+        return this.inject;
+    }
+
+    @Contract(pure = true)
     public final @NotNull ElementTimings timing()
     {
         return this.timing;
     }
 
     @Contract(pure = true)
-    public final @NotNull ElementInjector inject()
+    public final @NotNull ElementSystem system()
     {
-        return this.inject;
+        return this.system;
     }
 
 }
