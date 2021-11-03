@@ -37,7 +37,12 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     @Override
     public final void onEnable()
     {
-        Try.twr(timing.time("load"), $ -> {this.load();});
+        Try.twr(timing.time("load"), $ ->
+        {
+            this.load();
+
+            this.system().bind(this.timing());
+        });
     }
 
     @Internal
