@@ -14,6 +14,7 @@ dependencies {
     api(project(":element-inject"))
     api(project(":element-result"))
     api(project(":element-serial"))
+    api(project(":element-system"))
     
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 }
