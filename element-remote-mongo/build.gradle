@@ -1,0 +1,5 @@
+dependencies {
+    api(project(":element-remote"))
+    
+    api("org.mongodb:mongodb-driver-sync:4.3.2")
+}
