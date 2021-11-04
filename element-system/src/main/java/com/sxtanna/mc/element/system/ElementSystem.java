@@ -4,12 +4,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
 
 public interface ElementSystem extends ElementCloses
 {
 
     @NotNull <T extends AutoCloseable> T bind(@NotNull final T closes);
+
+    default void bind(@NotNull final Collection<? extends AutoCloseable> closes)
+    {
+        closes.forEach(this::bind);
+    }
 
 
 
