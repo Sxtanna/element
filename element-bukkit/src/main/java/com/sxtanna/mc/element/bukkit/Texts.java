@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 import net.md_5.bungee.api.ChatColor;
 
+import com.sxtanna.mc.element.bukkit.chat.MinecraftFontInfo;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -17,6 +19,37 @@ public enum Texts
 
     public static final char CHAT_CHAR = '&';
     public static final char GAME_CHAR = '§';
+
+    public static final int DEF_INDENT = 4;
+
+    public static final int MID_WIDTH = 154;
+    public static final int MAX_WIDTH = 320;
+
+
+    @Contract(pure = true)
+    public static @NotNull String indent(@NotNull final String text)
+    {
+        return indent(text, DEF_INDENT);
+    }
+
+    @Contract(pure = true)
+    public static @NotNull String indent(@NotNull final String text, final int amount)
+    {
+        return " ".repeat(amount) + text;
+    }
+
+
+    @Contract(pure = true)
+    public static @NotNull String center(@NotNull final String text)
+    {
+        return center(text, MinecraftFontInfo.findMinecraftFontInfoLength(text));
+    }
+
+    @Contract(pure = true)
+    public static @NotNull String center(@NotNull final String text, final int length)
+    {
+        return indent(text, ((MID_WIDTH - (length / 2)) / (MinecraftFontInfo.SPACE.getLength() + 1)) + 1);
+    }
 
 
     @Contract("_ -> new")
