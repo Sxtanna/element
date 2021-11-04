@@ -6,16 +6,17 @@ import io.github.classgraph.ClassGraph;
 
 import java.util.Collection;
 
-public final class ElementScanner
+public record ElementScanner(@NotNull ClassGraph scanner)
 {
 
-    @NotNull
-    private final ClassGraph scanner;
-
-
-    public ElementScanner(@NotNull final ClassGraph scanner)
+    public ElementScanner()
     {
-        this.scanner = scanner;
+        this(new ClassGraph());
+    }
+
+    public ElementScanner(@NotNull final ClassLoader loader)
+    {
+        this(new ClassGraph().addClassLoader(loader));
     }
 
 
