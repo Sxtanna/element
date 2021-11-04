@@ -18,14 +18,14 @@ import com.google.inject.name.Names;
 
 import java.nio.file.Path;
 
-final class ElementPluginModule extends ElementInjectorModule
+final class ElementPluginInjectorModule extends ElementInjectorModule
 {
 
     @NotNull
     private final ElementPlugin plugin;
 
 
-    ElementPluginModule(@NotNull final ElementPlugin plugin)
+    ElementPluginInjectorModule(@NotNull final ElementPlugin plugin)
     {
         this.plugin = plugin;
     }

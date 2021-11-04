@@ -23,7 +23,7 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     @NotNull
     private final ElementTimings  timing = new ElementTimings(this);
     @NotNull
-    private final ElementInjector inject = new ElementInjector(new ElementPluginModule(this));
+    private final ElementInjector inject = new ElementInjector(new ElementPluginInjectorModule(this));
 
 
     @Internal
