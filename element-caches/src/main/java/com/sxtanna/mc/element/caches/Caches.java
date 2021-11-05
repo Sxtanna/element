@@ -16,7 +16,7 @@ public enum Caches
     ;
 
     @Contract(value = "-> new", pure = true)
-    static <K, V> @NotNull Caffeine<K, V> caffeine()
+    public static <K, V> @NotNull Caffeine<K, V> caffeine()
     {
         //noinspection unchecked
         return (Caffeine<K, V>) Caffeine.newBuilder();
@@ -24,19 +24,19 @@ public enum Caches
 
 
     @Contract(value = "_ -> new", pure = true)
-    static <T> @NotNull Lazy<T> lazy(@NotNull final Supplier<@NotNull T> supplier)
+    public static <T> @NotNull Lazy<T> lazy(@NotNull final Supplier<@NotNull T> supplier)
     {
         return Lazy.lazy(supplier);
     }
 
     @Contract(value = "_ -> new", pure = true)
-    static <T> @NotNull Lazy<T> weak(@NotNull final Supplier<@NotNull T> supplier)
+    public static <T> @NotNull Lazy<T> weak(@NotNull final Supplier<@NotNull T> supplier)
     {
         return Lazy.weak(supplier);
     }
 
     @Contract(value = "_, _, _ -> new", pure = true)
-    static <T> @NotNull LazyTimed<T> time(final long time, @NotNull final TimeUnit unit, @NotNull final Supplier<@NotNull T> supplier)
+    public static <T> @NotNull LazyTimed<T> time(final long time, @NotNull final TimeUnit unit, @NotNull final Supplier<@NotNull T> supplier)
     {
         return Lazy.time(time, unit, supplier);
     }
