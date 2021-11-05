@@ -8,6 +8,7 @@ repositories {
 
 dependencies {
     api(project(":element-bukkit"))
+    api(project(":element-caches"))
     api(project(":element-common"))
     api(project(":element-config"))
     api(project(":element-finder"))
