@@ -9,11 +9,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.sxtanna.mc.element.common.state.Inits;
 import com.sxtanna.mc.element.common.state.State;
+import com.sxtanna.mc.element.finder.ElementScanner;
 import com.sxtanna.mc.element.inject.ElementInjector;
+import com.sxtanna.mc.element.plugin.finder.Requested;
+import com.sxtanna.mc.element.plugin.module.ElementPluginModule;
 import com.sxtanna.mc.element.plugin.timing.ElementTimings;
 import com.sxtanna.mc.element.result.Try;
 import com.sxtanna.mc.element.system.ElementSystem;
 import com.sxtanna.mc.element.system.Sys;
+
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class ElementPlugin extends JavaPlugin implements Inits, State
 {
@@ -39,9 +46,35 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     {
         Try.twr(timing.time("load"), $ ->
         {
-            this.load();
+            Try.twr(timing().time("load_plugin"), $0 ->
+            {
+                this.load();
+            });
 
+            final var modules = new ArrayList<ElementPluginModule>();
+
+            Try.twr(timing().time("scan_module"), $0 ->
+            {
+                final var scanner = new ElementScanner(ElementPlugin.this.getClassLoader());
+
+                scanner.find(ElementPluginModule.class)
+                       .stream()
+                       .filter(it -> Modifier.isFinal(it.getModifiers()))
+                       .filter(it -> !it.isAnnotationPresent(Requested.class))
+                       .map(clazz -> Try.opt(() -> inject().get(clazz)))
+                       .flatMap(Optional::stream)
+                       .forEach(modules::add);
+            });
+
+
+            this.system().bind(modules);
             this.system().bind(this.timing());
+
+
+            Try.twr(timing().time("load_module"), $0 ->
+            {
+                modules.forEach(module -> Try.run(() -> module.setup(this.system())));
+            });
         });
     }
 
