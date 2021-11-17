@@ -13,3 +13,5 @@ include 'element-result'
 include 'element-serial'
 include 'element-system'
 include 'element-tuples'
+include 'element-stream'
+
