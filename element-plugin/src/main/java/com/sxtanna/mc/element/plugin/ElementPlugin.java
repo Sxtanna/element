@@ -11,6 +11,7 @@ import com.sxtanna.mc.element.common.state.Inits;
 import com.sxtanna.mc.element.common.state.State;
 import com.sxtanna.mc.element.finder.ElementScanner;
 import com.sxtanna.mc.element.inject.ElementInjector;
+import com.sxtanna.mc.element.inject.ElementInjectorModule;
 import com.sxtanna.mc.element.plugin.finder.Requested;
 import com.sxtanna.mc.element.plugin.module.ElementPluginModule;
 import com.sxtanna.mc.element.plugin.timing.ElementTimings;
@@ -30,7 +31,7 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     @NotNull
     private final ElementTimings  timing = new ElementTimings(this);
     @NotNull
-    private final ElementInjector inject = new ElementInjector(new ElementPluginInjectorModule(this));
+    private final ElementInjector inject = new ElementInjector(createInjectorModule());
 
 
     @Internal
@@ -129,6 +130,12 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
     public final @NotNull ElementSystem system()
     {
         return this.system;
+    }
+
+
+    protected @NotNull ElementInjectorModule createInjectorModule()
+    {
+        return new ElementPluginInjectorModule(this);
     }
 
 }
