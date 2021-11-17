@@ -11,7 +11,7 @@ include 'element-remote'
 include 'element-remote-mongo'
 include 'element-result'
 include 'element-serial'
+include 'element-stream'
 include 'element-system'
 include 'element-tuples'
-include 'element-stream'
 
