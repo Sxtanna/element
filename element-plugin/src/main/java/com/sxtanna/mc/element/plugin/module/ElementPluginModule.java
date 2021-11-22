@@ -19,6 +19,7 @@ public interface ElementPluginModule extends ElementCloses, ElementModule
     @Override
     default void bind(@NotNull final ElementSystem system)
     {
+        ElementCloses.super.bind(system);
         ElementModule.super.bind(system);
     }
 

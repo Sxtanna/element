@@ -56,6 +56,7 @@ public record EventBinding<E extends Event>(@NotNull Class<E> clazz,
     @Override
     public void bind(@NotNull final ElementSystem system)
     {
+        ElementCloses.super.bind(system);
         ElementModule.super.bind(system);
     }
 
