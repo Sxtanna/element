@@ -15,4 +15,11 @@ public interface ElementPluginModule extends ElementCloses, ElementModule
     @Override
     void setup(@NotNull final ElementSystem system);
 
+
+    @Override
+    default void bind(@NotNull final ElementSystem system)
+    {
+        ElementModule.super.bind(system);
+    }
+
 }

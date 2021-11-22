@@ -5,11 +5,18 @@ import org.jetbrains.annotations.NotNull;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 
-public interface ElementCloses extends AutoCloseable
+public interface ElementCloses extends AutoCloseable, ElementBinder
 {
 
     @Override
     void close() throws Exception;
+
+
+    @Override
+    default void bind(@NotNull final ElementSystem system)
+    {
+        system.bind(this);
+    }
 
 
     default void closeAndIgnore()
@@ -23,7 +30,6 @@ public interface ElementCloses extends AutoCloseable
             /* ignored exception */
         }
     }
-
 
     default void closeAndReport()
     {

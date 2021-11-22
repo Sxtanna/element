@@ -52,6 +52,13 @@ public record EventBinding<E extends Event>(@NotNull Class<E> clazz,
         this.plugin().getServer().getPluginManager().registerEvent(this.clazz(), this, this.priority(), this, this.plugin());
     }
 
+
+    @Override
+    public void bind(@NotNull final ElementSystem system)
+    {
+        ElementModule.super.bind(system);
+    }
+
     @Override
     public void execute(@NotNull final Listener listener, @NotNull final Event e) throws EventException
     {
