@@ -16,6 +16,7 @@ import com.sxtanna.mc.element.plugin.finder.Requested;
 import com.sxtanna.mc.element.plugin.module.ElementPluginModule;
 import com.sxtanna.mc.element.plugin.timing.ElementTimings;
 import com.sxtanna.mc.element.result.Try;
+import com.sxtanna.mc.element.system.ElementModule;
 import com.sxtanna.mc.element.system.ElementSystem;
 import com.sxtanna.mc.element.system.Sys;
 
@@ -23,7 +24,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public abstract class ElementPlugin extends JavaPlugin implements Inits, State
+public abstract class ElementPlugin extends JavaPlugin implements Inits, State, ElementSystem
 {
 
     @NotNull
@@ -74,7 +75,7 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
 
             Try.twr(timing().time("load_module"), $0 ->
             {
-                modules.forEach(module -> Try.run(() -> module.setup(this.system())));
+                modules.forEach(module -> Try.run(() -> this.system().with(module)));
             });
         });
     }
@@ -89,6 +90,25 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State
 
             this.system().closeAndReport();
         });
+    }
+
+
+    @Override
+    public final void close() throws Exception
+    {
+        this.system().close();
+    }
+
+    @Override
+    public final <T extends AutoCloseable> @NotNull T bind(@NotNull final T closes)
+    {
+        return this.system().bind(closes);
+    }
+
+    @Override
+    public final <T extends ElementModule> @NotNull T with(@NotNull final T module)
+    {
+        return this.system().with(module);
     }
 
 
