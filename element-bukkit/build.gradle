@@ -1,4 +1,6 @@
 repositories {
+	github("Sxtanna/json-data-map")
+	
 	maven {
 		url = uri("https://papermc.io/repo/repository/maven-public/")
 	}
