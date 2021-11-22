@@ -10,13 +10,15 @@ import java.util.List;
 public interface ElementSystem extends ElementCloses
 {
 
-    @NotNull <T extends AutoCloseable> T bind(@NotNull final T closes);
+    <T extends AutoCloseable> @NotNull T bind(@NotNull final T closes);
+
+    <T extends ElementModule> @NotNull T with(@NotNull final T module);
+
 
     default void bind(@NotNull final Collection<? extends AutoCloseable> closes)
     {
         closes.forEach(this::bind);
     }
-
 
 
     class CloseException extends Exception

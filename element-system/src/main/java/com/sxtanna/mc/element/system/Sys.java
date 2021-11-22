@@ -31,6 +31,14 @@ public enum Sys
             }
 
             @Override
+            public <T extends ElementModule> @NotNull T with(@NotNull final T module)
+            {
+                module.setup(this);
+                return module;
+            }
+
+
+            @Override
             public void close() throws Exception
             {
                 final var caught = new ArrayList<Throwable>();
