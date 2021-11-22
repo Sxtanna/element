@@ -20,6 +20,12 @@ public interface ElementSystem extends ElementCloses
         closes.forEach(this::bind);
     }
 
+    default void with(@NotNull final Collection<? extends ElementModule> modules)
+    {
+        modules.forEach(this::with);
+    }
+
+
 
     class CloseException extends Exception
     {
