@@ -10,6 +10,7 @@ import com.sxtanna.mc.element.result.throwing.ExceptionalFunction;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public interface Result<T>
 {
@@ -154,6 +155,12 @@ public interface Result<T>
         {
             return Res.failure(ex);
         }
+    }
+
+
+    default void done(@NotNull final Consumer<T> successConsumer, @NotNull final Consumer<Throwable> failureConsumer)
+    {
+        fold(successConsumer::accept, failureConsumer::accept);
     }
 
 }
