@@ -26,10 +26,37 @@ public enum Opt
 
 
     @Contract(pure = true)
+    public static <T> @NotNull Optional<T> some(@NotNull final T value)
+    {
+        return Optional.of(value);
+    }
+
+    @Contract(pure = true)
+    public static <T> @NotNull Optional<T> none()
+    {
+        return Optional.empty();
+    }
+
+
+    @Contract(pure = true)
     public static @NotNull OptionalInt of(@Nullable final Integer value)
     {
         return value == null ? OptionalInt.empty() : OptionalInt.of(value);
     }
+
+
+    @Contract(pure = true)
+    public static @NotNull OptionalInt ofInt(final int value)
+    {
+        return OptionalInt.of(value);
+    }
+
+    @Contract(pure = true)
+    public static @NotNull OptionalInt noInt()
+    {
+        return OptionalInt.empty();
+    }
+
 
     @Contract(pure = true)
     public static @NotNull OptionalLong of(@Nullable final Long value)
@@ -37,10 +64,37 @@ public enum Opt
         return value == null ? OptionalLong.empty() : OptionalLong.of(value);
     }
 
+
+    @Contract(pure = true)
+    public static @NotNull OptionalLong ofLong(final long value)
+    {
+        return OptionalLong.of(value);
+    }
+
+    @Contract(pure = true)
+    public static @NotNull OptionalLong noLong()
+    {
+        return OptionalLong.empty();
+    }
+
+
     @Contract(pure = true)
     public static @NotNull OptionalDouble of(@Nullable final Double value)
     {
         return value == null ? OptionalDouble.empty() : OptionalDouble.of(value);
+    }
+
+
+    @Contract(pure = true)
+    public static @NotNull OptionalDouble noDouble(final double value)
+    {
+        return OptionalDouble.of(value);
+    }
+
+    @Contract(pure = true)
+    public static @NotNull OptionalDouble noDouble()
+    {
+        return OptionalDouble.empty();
     }
 
 
