@@ -16,7 +16,7 @@ public interface Result<T>
 
     default @NotNull Optional<T> asOptional()
     {
-        return this instanceof Success<T> success ? Opt.of(success.some()) : Optional.empty();
+        return this instanceof Success<T> success ? Opt.of(success.some()) : Opt.none();
     }
 
 
