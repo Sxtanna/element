@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import com.sxtanna.mc.element.result.handling.Failure;
 import com.sxtanna.mc.element.result.handling.Result;
 import com.sxtanna.mc.element.result.handling.Success;
+import com.sxtanna.mc.element.result.throwing.ExceptionalRunnable;
 import com.sxtanna.mc.element.result.throwing.ExceptionalSupplier;
 
 import java.util.Objects;
@@ -37,6 +38,19 @@ public enum Res
         return new Failure<>(none);
     }
 
+
+    public static @NotNull Result<Unit> of(@NotNull final ExceptionalRunnable runnable)
+    {
+        try
+        {
+            runnable.run();
+            return UNIT_RESULT;
+        }
+        catch (final Throwable ex)
+        {
+            return failure(ex);
+        }
+    }
 
     public static <T> @NotNull Result<T> of(@NotNull final ExceptionalSupplier<@Nullable T> supplier)
     {
