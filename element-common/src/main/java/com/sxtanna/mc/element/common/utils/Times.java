@@ -39,6 +39,19 @@ public enum Times
         NANOSECOND(TimeUnit.NANOSECONDS, ChronoUnit.NANOS),
         MICROSECOND(TimeUnit.MICROSECONDS, ChronoUnit.MICROS),
         MILLISECOND(TimeUnit.MILLISECONDS, ChronoUnit.MILLIS),
+
+        TICKS()
+                {
+                    @NotNull
+                    private static final Duration MINECRAFT_TICK_DURATION = Duration.of(1000L / 20L, ChronoUnit.MILLIS);
+
+                    @Override
+                    public @NotNull Duration toDuration()
+                    {
+                        return MINECRAFT_TICK_DURATION;
+                    }
+                },
+
         SECOND(TimeUnit.SECONDS, ChronoUnit.SECONDS),
         MINUTE(TimeUnit.MINUTES, ChronoUnit.MINUTES),
         HOUR(TimeUnit.HOURS, ChronoUnit.HOURS),
