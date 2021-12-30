@@ -15,6 +15,15 @@ public enum Res
 {
     ;
 
+    public enum Unit
+    {
+        INSTANCE
+    }
+
+
+    @NotNull
+    private static final Result<Unit> UNIT_RESULT = new Success<>(Unit.INSTANCE);
+
 
     @Contract("_ -> new")
     public static <T> @NotNull Success<T> success(@NotNull final T some)
