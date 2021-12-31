@@ -6,7 +6,10 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
+import com.sxtanna.mc.element.bukkit.Tasks;
+import com.sxtanna.mc.element.bukkit.task.TaskScheduler;
 import com.sxtanna.mc.element.common.state.Inits;
 import com.sxtanna.mc.element.common.state.State;
 import com.sxtanna.mc.element.finder.ElementScanner;
@@ -16,6 +19,7 @@ import com.sxtanna.mc.element.plugin.finder.Requested;
 import com.sxtanna.mc.element.plugin.module.ElementPluginModule;
 import com.sxtanna.mc.element.plugin.timing.ElementTimings;
 import com.sxtanna.mc.element.result.Try;
+import com.sxtanna.mc.element.result.throwing.ExceptionalSupplier;
 import com.sxtanna.mc.element.system.ElementModule;
 import com.sxtanna.mc.element.system.ElementSystem;
 import com.sxtanna.mc.element.system.Sys;
@@ -23,8 +27,10 @@ import com.sxtanna.mc.element.system.Sys;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
-public abstract class ElementPlugin extends JavaPlugin implements Inits, State, ElementSystem
+public abstract class ElementPlugin extends JavaPlugin implements Inits, State, ElementSystem, TaskScheduler
 {
 
     @NotNull
@@ -156,6 +162,83 @@ public abstract class ElementPlugin extends JavaPlugin implements Inits, State, 
     protected @NotNull ElementInjectorModule createInjectorModule()
     {
         return new ElementPluginInjectorModule(this);
+    }
+
+
+    @Override
+    public final @NotNull BukkitTask main(@NotNull final Runnable runnable)
+    {
+        return Tasks.main(this, runnable);
+    }
+
+    @Override
+    public final @NotNull BukkitTask work(@NotNull final Runnable runnable)
+    {
+        return Tasks.work(this, runnable);
+    }
+
+
+    @Override
+    public final @NotNull BukkitTask delay(@NotNull final Tasks.Context context, final long time, @NotNull final Runnable runnable)
+    {
+        return Tasks.delay(this, context, time, runnable);
+    }
+
+    @Override
+    public final @NotNull BukkitTask delay(@NotNull final Tasks.Context context, final long time, @NotNull final TimeUnit unit, @NotNull final Runnable runnable)
+    {
+        return Tasks.delay(this, context, time, unit, runnable);
+    }
+
+
+    @Override
+    public final @NotNull BukkitTask timer(@NotNull final Tasks.Context context, final long time, @NotNull final Runnable runnable)
+    {
+        return timer(context, time, false, runnable);
+    }
+
+    @Override
+    public final @NotNull BukkitTask timer(@NotNull final Tasks.Context context, final long time, @NotNull final TimeUnit unit, @NotNull final Runnable runnable)
+    {
+        return timer(context, time, unit, false, runnable);
+    }
+
+
+    @Override
+    public final @NotNull BukkitTask timer(@NotNull final Tasks.Context context, final long time, final boolean now, @NotNull final Runnable runnable)
+    {
+        return Tasks.timer(this, context, time, now, runnable);
+    }
+
+    @Override
+    public final @NotNull BukkitTask timer(@NotNull final Tasks.Context context, final long time, @NotNull final TimeUnit unit, final boolean now, @NotNull final Runnable runnable)
+    {
+        return Tasks.timer(this, context, time, unit, now, runnable);
+    }
+
+
+    @Override
+    public final @NotNull CompletableFuture<Void> mainAwait(@NotNull final Runnable runnable)
+    {
+        return Tasks.mainAwait(this, runnable);
+    }
+
+    @Override
+    public final @NotNull CompletableFuture<Void> workAwait(@NotNull final Runnable runnable)
+    {
+        return Tasks.workAwait(this, runnable);
+    }
+
+    @Override
+    public final @NotNull <T> CompletableFuture<T> mainAwait(@NotNull final ExceptionalSupplier<T> supplier)
+    {
+        return Tasks.mainAwait(this, supplier);
+    }
+
+    @Override
+    public final @NotNull <T> CompletableFuture<T> workAwait(@NotNull final ExceptionalSupplier<T> supplier)
+    {
+        return Tasks.workAwait(this, supplier);
     }
 
 }
