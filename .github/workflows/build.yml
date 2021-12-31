@@ -23,6 +23,8 @@ jobs:
         env:
           SXTANNA_PACKAGES_USER: ${{ secrets.SXTANNA_PACKAGES_USER }}
           SXTANNA_PACKAGES_AUTH: ${{ secrets.SXTANNA_PACKAGES_AUTH }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SXTANNA_GPG_KEY_DATA }}
+          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SXTANNA_GPG_KEY_AUTH }}
         run: ./gradlew publish
 
       - name: Cleanup Gradle Cache
