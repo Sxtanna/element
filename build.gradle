@@ -75,9 +75,9 @@ subprojects {
     }
     
     signing {
-        if (findProject("signingKey") != null) {
-            def signingKey = findProperty("signingKey")
-            def signingPassword = findProperty("signingPassword")
+        if (System.env["ORG_GRADLE_PROJECT_signingKey"] != null) {
+            def signingKey = System.env["ORG_GRADLE_PROJECT_signingKey"].replace("\\n", "\n")
+            def signingPassword = System.env["ORG_GRADLE_PROJECT_signingPassword"]
     
             useInMemoryPgpKeys(signingKey, signingPassword)
         }
