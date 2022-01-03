@@ -163,4 +163,15 @@ public interface Result<T>
         fold(successConsumer::accept, failureConsumer::accept);
     }
 
+
+    default @NotNull Result<T> onSuccess(@NotNull final ExceptionalConsumer<T> whenSome)
+    {
+        return fold(whenSome, $ -> {});
+    }
+
+    default @NotNull Result<T> onFailure(@NotNull final ExceptionalConsumer<Throwable> whenNone)
+    {
+        return fold($ -> {}, whenNone);
+    }
+
 }
