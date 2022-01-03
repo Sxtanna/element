@@ -18,6 +18,12 @@ public interface RemoteDatabase<C> extends State
     void kill();
 
 
+    default boolean ready()
+    {
+        return true;
+    }
+
+
     @NotNull Result<C> connect();
 
 
