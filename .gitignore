@@ -79,3 +79,4 @@ dependency-reduced-pom.xml
 # NO NO FILES
 element-remote-mongo/src/test/java/com/sxtanna/mc/element/remote/mongo/test/RemoteDatabaseMongoTest.java
 element-remote-mysql/src/test/java/com/sxtanna/mc/element/remote/mysql/test/RemoteDatabaseMySQLTest.java
+element-remote-redis/src/test/java/com/sxtanna/mc/element/remote/redis/test/RemoteDatabaseRedisTest.java
