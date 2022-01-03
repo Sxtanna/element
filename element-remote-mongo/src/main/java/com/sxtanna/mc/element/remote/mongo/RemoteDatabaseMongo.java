@@ -9,7 +9,6 @@ import com.sxtanna.mc.element.result.handling.Result;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -68,7 +67,16 @@ public final class RemoteDatabaseMongo implements RemoteDatabase<MongoClient>
     @Override
     public @NotNull Result<MongoClient> connect()
     {
-        return Res.of(() -> Objects.requireNonNull(this.client.get(), "client not loaded"));
+        final var client = this.client.get();
+
+        if (client != null)
+        {
+            return Res.success(client);
+        }
+        else
+        {
+            return Res.failure(new IllegalStateException("Database is not loaded"));
+        }
     }
 
 }
