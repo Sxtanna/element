@@ -65,6 +65,13 @@ public final class RemoteDatabaseMongo implements RemoteDatabase<MongoClient>
 
 
     @Override
+    public boolean ready()
+    {
+        return this.loaded.get();
+    }
+
+
+    @Override
     public @NotNull Result<MongoClient> connect()
     {
         final var client = this.client.get();
