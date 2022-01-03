@@ -64,4 +64,18 @@ public enum Res
         }
     }
 
+
+    public static <T> @NotNull Result<T> opt(@Nullable final T value)
+    {
+        if (value != null)
+        {
+            //noinspection unchecked
+            return value == Unit.INSTANCE ? (Result<T>) UNIT_RESULT : Res.success(value);
+        }
+        else
+        {
+            return Res.failure(new NullPointerException("missing value"));
+        }
+    }
+
 }
