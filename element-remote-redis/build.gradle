@@ -1,0 +1,5 @@
+dependencies {
+	api(project(":element-remote"))
+	
+	api("io.lettuce:lettuce-core:6.1.5.RELEASE")
+}
