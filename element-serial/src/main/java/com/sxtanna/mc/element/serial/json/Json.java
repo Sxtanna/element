@@ -11,6 +11,7 @@ import com.sxtanna.mc.element.serial.json.codec.TypeWriter;
 import com.sxtanna.mc.json.JsonMap;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -108,6 +109,16 @@ public enum Json
     public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable final JsonElement json)
     {
         return normal().fromJson(json, clazz);
+    }
+
+    public static <T> @Nullable T decode(@NotNull final TypeToken<T> token, @Nullable final String json)
+    {
+        return normal().fromJson(json, token.getType());
+    }
+
+    public static <T> @Nullable T decode(@NotNull final TypeToken<T> token, @Nullable final JsonElement json)
+    {
+        return normal().fromJson(json, token.getType());
     }
 
 
