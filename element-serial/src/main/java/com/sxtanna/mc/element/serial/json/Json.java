@@ -78,34 +78,34 @@ public enum Json
     }
 
 
-    public static @NotNull String encodeToText(@Nullable Object value)
+    public static @NotNull String encodeToText(@Nullable final Object value)
     {
         return normal().toJson(value);
     }
 
-    public static @NotNull String encodeToText(@Nullable Object value, @NotNull final Class<?> clazz)
+    public static @NotNull String encodeToText(@Nullable final Object value, @NotNull final Class<?> clazz)
     {
         return normal().toJson(value, clazz);
     }
 
 
-    public static @NotNull JsonElement encodeToJson(@Nullable Object value)
+    public static @NotNull JsonElement encodeToJson(@Nullable final Object value)
     {
         return normal().toJsonTree(value);
     }
 
-    public static @NotNull JsonElement encodeToJson(@Nullable Object value, @NotNull final Class<?> clazz)
+    public static @NotNull JsonElement encodeToJson(@Nullable final Object value, @NotNull final Class<?> clazz)
     {
         return normal().toJsonTree(value, clazz);
     }
 
 
-    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable String json)
+    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable final String json)
     {
         return normal().fromJson(json, clazz);
     }
 
-    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable JsonElement json)
+    public static <T> @Nullable T decode(@NotNull final Class<T> clazz, @Nullable final JsonElement json)
     {
         return normal().fromJson(json, clazz);
     }
