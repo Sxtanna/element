@@ -22,7 +22,7 @@ public record ElementScanner(@NotNull ClassGraph scanner)
 
     public <T> Collection<Class<T>> find(@NotNull final Class<T> clazz)
     {
-        return scanner.enableClassInfo().ignoreClassVisibility().scan().getClassesImplementing(clazz).loadClasses(clazz, true);
+        return this.scanner().enableClassInfo().ignoreClassVisibility().scan().getClassesImplementing(clazz).loadClasses(clazz, true);
     }
 
 }
